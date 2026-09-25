@@ -90,7 +90,7 @@ gets read, rather than only in chat.
 
 | # | Project | Where it lives | State |
 |---|---------|----------------|-------|
-| 0001 | **Tiered cascade router** | `specs/0001-tiered-cascade-router/`, `experiments/router/`, `logs/router/` | **Active.** Spec ready (built, benched, thresholds pass); rung-3 decision tier added 2026-09-25, ships triage-only and default off |
+| 0001 | **Tiered cascade router** | `specs/0001-tiered-cascade-router/`, `experiments/router/` — agent context in `experiments/router/AGENTS.md` — `logs/router/` | **Active.** Spec ready (built, benched, thresholds pass); rung-3 decision tier added 2026-09-25, ships triage-only and default off |
 | 0002 | **Config tuner** | `specs/0002-config-tuner/` | Planned — prd + design done, awaiting operator sign-off |
 | 0003 | **Supervisory orchestrator** | `specs/0003-supervisory-orchestrator/` | Scaffold |
 | — | Latent-bridge / composition line | `plans/index.md` | Paused, not abandoned (decisions D001–D004 stay tentative) |
@@ -167,26 +167,11 @@ dense models at IQ4_XS, composed rather than merged into one weight matrix.
 
 ### Open questions — project 0001
 
-**Routing:** per-token, per-phrase or per-layer? What classifier architecture —
-small transformer, learned hash, n-gram LM? Learned offline or adaptive online?
-
-**Verification (rungs):** which jobs admit a cheap certificate? Rung 3 measured as
-a good *ranker* and a poor *decider* — is that a property of the job or of the
-model class?
-
-**Latent bridge:** does a linear projection between last-layer hidden states
-suffice, or does it need attention? Trained end-to-end or post-hoc on cached
-representations? Does bridging invalidate the KV-cache?
-
-**Memory tiering:** can Colibrì's expert-streaming insight apply at the *module*
-level? How many modules stay resident at IQ4_XS in 16 GB? Cold-swap latency?
-
-**Quantisation:** does bridge quality degrade at 4-bit? Should the bridge and
-router live at higher precision while the modules stay low?
-
-**Composition patterns:** merge (SLERP/TIES/DARE), stripe (alternate modules
-layer-by-layer), stack (A's last hidden state → B), ensemble (parallel weighted
-vote), MoE-style dispatch, adaptive (router picks the pattern per prompt).
+The working backlog lives with the project, not here: `experiments/router/AGENTS.md`
+carries the full list — model selection, routing, certificate rungs, latent bridge,
+memory tiering, quantisation, composition patterns. The two sharpest at the moment:
+which jobs admit a cheap certificate at all, and whether the ranker/decider gap on the
+verdict job is a property of the job or of the model class.
 
 ---
 

@@ -102,6 +102,7 @@ Last updated: 2026-09-25
 - 2026-07-19 — Cross-repo: spark spec 0001 model-fleet-api opened (wip-research, 6 spikes; embedder promoted to first fleet tenant S6); patchwork side tracked in generalized-router-interfaces plan (Tier/Enricher = first customer). GitHub remote renamed to anthony-mqdt-labs; commit email switched to noreply.
 - 2026-07-20 — Added mandatory project-entry GitHub account preflight: verify `gh api user` is `anthony-mqdt-labs` before work; stop and direct the user to switch/login when it is not. Git identity remains repository-local.
 - 2026-09-25 — Rung-3 decision tier built + live-fired: darkcore/decisions.py (micro-scorer over a resident tier, /v1/systemone http client, decision_judge verifier registered at rung 3; 24 model-free tests incl. a loopback http round-trip, suite 85p/3s). Measured on 18 labelled pairs (fixtures/decision-pairs.json): AUC 0.914, 22.2% false-pass as a pass authority, LOO triage 8/18 judge calls skipped at 0/0 error. Surveys: research/system-one-decision-models.md, research/decision-finetune-path.md. Report: experiments/router/DECISION-REPORT.md
+- 2026-09-25 — Per-project agent context added: experiments/router/AGENTS.md now carries project 0001's thesis, the full question backlog (moved out of the root bootstrap), the darkcore code map, how to run, its invariants and its gotchas; the root AGENTS.md points at it instead of duplicating the list
 <!-- /AUTO:changes -->
 
 ---
