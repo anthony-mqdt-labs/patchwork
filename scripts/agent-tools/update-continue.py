@@ -31,14 +31,20 @@ PROJECT_ROOT = _SCRIPT_DIR.parent.parent
 CONTINUE_PATH = PROJECT_ROOT / "CONTINUE.md"
 PROJECT_NAME = "patchwork"
 
-BOOTSTRAP_CHECKS: list[tuple[str, str]] = [
-    ("Working tree clean", "git status --short"),
-    ("Latest commits", "git log --oneline -5"),
-    ("AGENTS.md exists", "test -f AGENTS.md"),
-    ("MEMORY.md exists", "test -f MEMORY.md"),
-    ("CONTINUE.md exists", "test -f CONTINUE.md"),
-    ("plans/index.md exists", "test -f plans/index.md"),
-    ("docs/references.md exists", "test -f docs/references.md"),
+# (label, command, expectation)
+#   "exit"     — the command's exit code decides (used by `test -f`)
+#   "empty"    — the command must print NOTHING (a clean working tree)
+#   "nonempty" — the command must print something (a readable commit log)
+# The expectation is declared, not inferred: polarity differs per check, and
+# inferring "non-empty means ok" silently inverted the clean-tree check.
+BOOTSTRAP_CHECKS: list[tuple[str, str, str]] = [
+    ("Working tree clean", "git status --short", "empty"),
+    ("Latest commits", "git log --oneline -5", "nonempty"),
+    ("AGENTS.md exists", "test -f AGENTS.md", "exit"),
+    ("MEMORY.md exists", "test -f MEMORY.md", "exit"),
+    ("CONTINUE.md exists", "test -f CONTINUE.md", "exit"),
+    ("plans/index.md exists", "test -f plans/index.md", "exit"),
+    ("docs/references.md exists", "test -f docs/references.md", "exit"),
 ]
 
 EXTERNAL_DEPS: list[tuple[str, str]] = [
@@ -69,6 +75,23 @@ def _run(cmd: str, timeout: int = 15) -> str:
                                         stderr=subprocess.STDOUT, timeout=timeout).decode().strip()
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired) as e:
         return f"[error: {e!r}]"
+
+
+def _evaluate_check(expect: str, ret: str) -> tuple[bool, str]:
+    """Decide one bootstrap check's status, per its declared expectation.
+
+    Do not infer success from "output is non-empty": a clean working tree prints
+    nothing at all, so that inference reports a clean tree as a failure and a
+    dirty tree as a pass.
+    """
+    errored = ret.startswith("[error")
+    if expect == "exit":
+        return (not errored), ("OK" if not errored else ret)
+    if expect == "empty":
+        ok = not errored and not ret.strip()
+        return ok, (ret.strip() or "clean")
+    ok = not errored and bool(ret.strip())
+    return ok, ret
 
 
 def _today_str() -> str:
@@ -113,15 +136,8 @@ def _detect_active_files() -> list[str]:
 
 def _build_bootstrap_table() -> str:
     lines = []
-    for label, cmd in BOOTSTRAP_CHECKS:
-        need_exitcode = cmd.startswith("test ") or cmd.startswith("[ ")
-        if need_exitcode:
-            ret = _run(cmd)
-            ok = not ret.startswith("[error")
-            result = "OK" if ok else ret
-        else:
-            result = _run(cmd)
-            ok = bool(result) and not result.startswith("[error")
+    for label, cmd, expect in BOOTSTRAP_CHECKS:
+        ok, result = _evaluate_check(expect, _run(cmd))
         status = "✅" if ok else "❌"
         lines.append(f"- [{status}] `{cmd}` — {label}")
         if result and len(result) < 200:
@@ -359,16 +375,8 @@ def cmd_verify() -> None:
     print()
 
     failures = 0
-    for label, cmd in BOOTSTRAP_CHECKS:
-        need_exitcode = cmd.startswith("test ") or cmd.startswith("[ ")
-        if need_exitcode:
-            # Commands like `test -f X` signal via exit code, not stdout
-            ret = _run(cmd)
-            ok = ret.startswith("[error") is False  # ran without exception = file existed
-            result = "OK" if ok else ret
-        else:
-            result = _run(cmd)
-            ok = bool(result) and not result.startswith("[error")
+    for label, cmd, expect in BOOTSTRAP_CHECKS:
+        ok, result = _evaluate_check(expect, _run(cmd))
         status = "✅" if ok else "❌"
         print(f"  {status} {label}")
         if not ok:
@@ -416,12 +424,41 @@ def _build_bootstrap_section(sections: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
+def cmd_selftest() -> None:
+    """Regression checks for the bootstrap-check evaluation. Non-zero exit on failure."""
+    cases = [
+        # (expect, output the command produced, should it count as a pass?)
+        ("empty", "", True),                        # clean tree — prints nothing
+        ("empty", " M AGENTS.md", False),           # dirty tree — the file list IS the failure
+        ("empty", "[error: CalledProcessError(...)]", False),
+        ("nonempty", "abc1234 a commit subject", True),
+        ("nonempty", "", False),                    # unreadable repo history
+        ("nonempty", "[error: TimeoutExpired(...)]", False),
+        ("exit", "OK", True),
+        ("exit", "[error: FileNotFoundError(...)]", False),
+    ]
+    failures = 0
+    for expect, ret, want in cases:
+        got, _ = _evaluate_check(expect, ret)
+        if got != want:
+            failures += 1
+            print(f"  ❌ expect={expect!r} ret={ret!r} → {got}, wanted {want}")
+    # The regression this exists for: an inverted clean-tree check reports a
+    # clean tree as a failure and a dirty tree as a pass.
+    if not _evaluate_check("empty", "")[0]:
+        failures += 1
+        print("  ❌ the clean-tree case is inverted again")
+    print(f"  {len(cases)} checks, {failures} failure(s)")
+    sys.exit(1 if failures else 0)
+
+
 def print_usage() -> None:
     print(__doc__)
     print("Commands:")
     print("  python scripts/agent-tools/update-continue.py --new       Create a fresh CONTINUE.md")
     print("  python scripts/agent-tools/update-continue.py --save      Refresh dynamic sections")
     print("  python scripts/agent-tools/update-continue.py --verify    Validate handoff state")
+    print("  python scripts/agent-tools/update-continue.py --selftest  Check the check logic")
 
 
 def main() -> None:
@@ -433,6 +470,8 @@ def main() -> None:
         cmd_save()
     elif "--verify" in args:
         cmd_verify()
+    elif "--selftest" in args:
+        cmd_selftest()
     else:
         if not CONTINUE_PATH.exists():
             print(f"📝 No CONTINUE.md found at {CONTINUE_PATH}")
