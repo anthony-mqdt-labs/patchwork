@@ -42,7 +42,8 @@ BOOTSTRAP_CHECKS: list[tuple[str, str]] = [
 ]
 
 EXTERNAL_DEPS: list[tuple[str, str]] = [
-    ("project-agent-interface skill", "~/.hermes/profiles/penny/skills/software-development/project-agent-interface/"),
+    # Profile-local skill path kept generic: no machine-local profile name in-repo.
+    ("project-agent-interface skill", "~/.hermes/profiles/<profile>/skills/software-development/project-agent-interface/"),
     ("colibri", "https://github.com/JustVugg/colibri"),
     ("llama.cpp / GGUF", "https://github.com/ggerganov/llama.cpp"),
     ("mergekit", "https://github.com/arcee-ai/mergekit"),
