@@ -23,6 +23,7 @@ Last updated: 2026-09-25
 | D008 | Router models = Bonsai ternary 1.7B/8B/27B on stock mlx_lm (M2 dev); supersedes the Qwen2.5/IQ4_XS candidacy for the routing thread | Adopted | 2026-07-16 | Established by the spark eval work (MODEL-EVAL, bake-offs) |
 | D009 | Require a project-entry GitHub authentication preflight for `anthony-mqdt-labs`; keep commit identity repository-local | Adopted | 2026-07-20 | Prevents the shared GitHub CLI session and Git author identity from leaking across sibling projects |
 | D010 | Rung 3 of the verifier ladder = a decision tier (`experiments/router/darkcore/decisions.py`): a micro-scorer over a resident tier, plus a `POST /v1/systemone` client for shipped System One models. Ships as **three-way triage, default off** — never as the pass authority | Adopted | 2026-09-25 | Measured: a raw next-token head is a good ranker (AUC 0.914) and a poor decider (22.2% false-pass; no threshold separates plausible-but-wrong), while LOO triage skips 8/18 judge calls at 0/0 error. Ties into D006's certificate-cost taxonomy; default gated on a larger labelled set (`experiments/router/DECISION-REPORT.md`) |
+| D011 | Patchwork is a **workshop holding many** small-model / ML constructs; the tiered cascade router is project **0001**, not the repository's identity. A new construct claims a registry row plus its own `specs/NNNN-<slug>/`, `experiments/<slug>/` and `logs/<slug>/` slots | Adopted | 2026-09-25 | The operator corrected an inherited misconception: agents were reading the repo's purpose as "routing" and growing router-shaped abstractions into unrelated work. Framing now lives in `AGENTS.md` §0–§1 |
 
 <!-- /AUTO:decisions -->
 
@@ -107,7 +108,11 @@ Last updated: 2026-09-25
 
 ## Architecture Notes (Manual)
 
-- **Two threads under the composition thesis (routing + bridging + tiering):**
+- **Repo shape:** patchwork is a workshop holding many small-model / ML constructs.
+  The tiered cascade router is project **0001** — the first construct with a spec,
+  not the repository's purpose (D011). If you catch yourself describing this repo
+  as "the router project", correct the framing in `AGENTS.md` §0–§1.
+- **Project 0001 has two threads (routing + bridging + tiering):**
   (1) the **routing pillar** — *active*, spec-driven (`specs/0001–0003`,
   `docs/routing-architecture.md`), decisions D005–D008 adopted; (2) the
   **latent-bridge** thread — *paused*, planned in `plans/index.md`, decisions

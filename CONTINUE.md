@@ -12,6 +12,11 @@
 
 ## ⚠️ 0. Session state a returning agent MUST know
 
+**Repo shape — read before scoping work.** Patchwork holds **many** small-model / ML
+constructs; the tiered cascade router is project **0001**, not the repository's
+identity. Read `AGENTS.md` §0–§1 before treating anything here as router-wide, and see
+D011 in `MEMORY.md`. The work described below is project 0001's.
+
 **GitHub preflight (D009) — PASSED, after a detour.** At session start
 `gh api user --jq .login` returned a *different* account than this repository
 requires, which correctly blocked all commits; the operator switched to

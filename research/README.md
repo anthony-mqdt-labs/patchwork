@@ -2,6 +2,12 @@
 
 > Structured findings from investigations. Each subdirectory or file is one investigation thread.
 
+> **Filings are per project.** The threads below belong to **project 0001** (tiered
+> cascade router) unless a row says otherwise. A new project's findings get their own
+> file and their own row; prototypes live in `experiments/<slug>/`. The convention for
+> landing a project is in `AGENTS.md` §1 — patchwork holds many of them, and routing is
+> only the first.
+
 ## Contents
 
 | File | Topic | Status |
