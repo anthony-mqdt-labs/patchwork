@@ -190,6 +190,22 @@ this box, and it needed no torch.
    and 1.8 s for 4 questions on M1 Max CPU **[rep]** — too slow for a router hot
    path even if torch were allowed.
 
+**Deferred, not dismissed — the open-jev arm that never got benched.** APUS-OpenJev-v1-4B
+is shortlisted at §4 above, Apache-2.0, and an MLX-4bit build exists
+(`apus-ailab/APUS-OpenJev-v1-4B-MLX-4bit`; the family also publishes 4B / 9B / 35B-A3B in
+GGUF and in MLX at 4-bit and 8-bit). It was left out of the measured round on budget: the
+round was scoped to sub-1 B heads to test whether *any* small decision model can carry a
+verdict, and that answer came back task-shaped rather than size-shaped — at 0.6–0.8 B the
+choice head was solved 12/12 while the verdict head stayed weak. That is a judgement, not
+evidence, and APUS-4B is the one open-jev arm that could still falsify it. Price it
+properly before running it: its decision runtime is a Python package (`openjet_runtime/`,
+plus `deployment/serve_vllm.py`), vLLM-and-torch shaped on a box that runs MLX — so
+adopting it means writing a shim, not downloading a file. The remaining open-jev arms were
+rejected on grounds, not on size: `SiliconLabAI/OpenJev` is orchestration rather than
+weights (and its per-option scoring *lost* to single-pass here, 6/12 vs 10/12), `openjev.sh`
+is a hosted relay to the proprietary model, and `zefan-cai/open-jev`, `heman10x/rlcd-*` and
+`argos1111/…-jev` (Japanese) publish nothing we can adopt as-is.
+
 ## 5. Licensing, for a project that requires permissive only
 
 `AGENTS.md` requires permissively licensed models. Scanning the family:
