@@ -69,6 +69,18 @@ Last updated: 2026-09-25
   (`research/decision-finetune-path.md`) or keep the rung-4 judge. Adopt the
   family where it *works*: choice/routing, 12/12 at 53 ms.
   `experiments/router/DECISION-REPORT.md` §5, `experiments/router/LAYA-BENCH.json`.
+- Terminal-tier unavailability FAILS OPEN: an unavailable last tier returns the previous tier's failed-verification answer with flagged=False and final_tier set to the tier that never ran — **OPEN**
+  Reproduced 2026-09-25 with the model-free harness (scripted pool, T2 unavailable):
+  attempts T0 fail / T1 fail / T2 unavailable give final_tier T2, flagged False, and
+  the answer is T1's rejected output. Two causes in
+  `experiments/router/darkcore/cascade.py`: the TierUnavailable branch walks
+  next_tier to None and exits the loop without setting flagged, and the final tier
+  is read off the last attempt, which is the unavailable one. Impact today: T2 is
+  NOT downloaded on this machine, so a route that fails at T0 and T1 returns an
+  unverified answer reported as tier T2 with no flag, a silent false certification
+  for any caller (spark relay, agent harness). Next action: operator decides whether
+  terminal unavailability should flag the route or raise; then set flagged and report
+  the last tier that actually produced an answer.
 <!-- /AUTO:issues -->
 
 ---
