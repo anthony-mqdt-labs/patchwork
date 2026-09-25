@@ -1,0 +1,1382 @@
+{
+  "ts": "2026-09-25T07:37:50Z",
+  "git_sha": "b15fb1a",
+  "tier": "T1",
+  "model": "prism-ml/Ternary-Bonsai-8B-mlx-2bit",
+  "n_pairs": 18,
+  "n_battery": 12,
+  "statement": "Does the ANSWER correctly and adequately resolve the QUESTION?",
+  "backend": "http",
+  "url": "http://127.0.0.1:8123",
+  "yes_ids": null,
+  "no_ids": null,
+  "load_ms": 0.0,
+  "pairs": [
+    {
+      "id": "E1-good",
+      "class": "emotional",
+      "label": 1,
+      "p_yes": 0.7272,
+      "p_raw": 0.7272,
+      "p_either": 1.0,
+      "forward_ms": 136.06
+    },
+    {
+      "id": "E1-bad",
+      "class": "emotional",
+      "label": 0,
+      "p_yes": 0.068,
+      "p_raw": 0.068,
+      "p_either": 1.0,
+      "forward_ms": 80.1
+    },
+    {
+      "id": "R2-good",
+      "class": "reasoning",
+      "label": 1,
+      "p_yes": 0.1649,
+      "p_raw": 0.1649,
+      "p_either": 1.0,
+      "forward_ms": 106.78
+    },
+    {
+      "id": "R2-bad",
+      "class": "reasoning",
+      "label": 0,
+      "p_yes": 0.1861,
+      "p_raw": 0.1861,
+      "p_either": 1.0,
+      "forward_ms": 83.49
+    },
+    {
+      "id": "R3-good",
+      "class": "reasoning",
+      "label": 1,
+      "p_yes": 0.7214,
+      "p_raw": 0.7214,
+      "p_either": 1.0,
+      "forward_ms": 61.31
+    },
+    {
+      "id": "R3-bad",
+      "class": "reasoning",
+      "label": 0,
+      "p_yes": 0.5531,
+      "p_raw": 0.5531,
+      "p_either": 1.0,
+      "forward_ms": 155.35
+    },
+    {
+      "id": "R1-good",
+      "class": "reasoning",
+      "label": 1,
+      "p_yes": 0.6072,
+      "p_raw": 0.6072,
+      "p_either": 1.0,
+      "forward_ms": 93.59
+    },
+    {
+      "id": "R1-bad",
+      "class": "reasoning",
+      "label": 0,
+      "p_yes": 0.3184,
+      "p_raw": 0.3184,
+      "p_either": 1.0,
+      "forward_ms": 78.24
+    },
+    {
+      "id": "A1-good",
+      "class": "agentic",
+      "label": 1,
+      "p_yes": 0.6427,
+      "p_raw": 0.6427,
+      "p_either": 1.0,
+      "forward_ms": 119.84
+    },
+    {
+      "id": "A1-bad",
+      "class": "agentic",
+      "label": 0,
+      "p_yes": 0.6782,
+      "p_raw": 0.6782,
+      "p_either": 1.0,
+      "forward_ms": 87.22
+    },
+    {
+      "id": "A3-good",
+      "class": "agentic",
+      "label": 1,
+      "p_yes": 0.5097,
+      "p_raw": 0.5097,
+      "p_either": 1.0,
+      "forward_ms": 120.85
+    },
+    {
+      "id": "A3-bad",
+      "class": "agentic",
+      "label": 0,
+      "p_yes": 0.291,
+      "p_raw": 0.291,
+      "p_either": 1.0,
+      "forward_ms": 85.19
+    },
+    {
+      "id": "A4-good",
+      "class": "agentic",
+      "label": 1,
+      "p_yes": 0.5586,
+      "p_raw": 0.5586,
+      "p_either": 1.0,
+      "forward_ms": 144.4
+    },
+    {
+      "id": "A4-bad",
+      "class": "agentic",
+      "label": 0,
+      "p_yes": 0.2375,
+      "p_raw": 0.2375,
+      "p_either": 1.0,
+      "forward_ms": 101.35
+    },
+    {
+      "id": "E3-good",
+      "class": "emotional",
+      "label": 1,
+      "p_yes": 0.5024,
+      "p_raw": 0.5024,
+      "p_either": 1.0,
+      "forward_ms": 93.62
+    },
+    {
+      "id": "E3-bad",
+      "class": "emotional",
+      "label": 0,
+      "p_yes": 0.2462,
+      "p_raw": 0.2462,
+      "p_either": 1.0,
+      "forward_ms": 84.75
+    },
+    {
+      "id": "R4-good",
+      "class": "reasoning",
+      "label": 1,
+      "p_yes": 0.1901,
+      "p_raw": 0.1901,
+      "p_either": 1.0,
+      "forward_ms": 107.77
+    },
+    {
+      "id": "R4-bad",
+      "class": "reasoning",
+      "label": 0,
+      "p_yes": 0.3755,
+      "p_raw": 0.3755,
+      "p_either": 1.0,
+      "forward_ms": 82.96
+    }
+  ],
+  "raw": {
+    "auc": 0.728,
+    "at_0.50": {
+      "threshold": 0.5,
+      "false_pass_rate": 0.222,
+      "false_fail_rate": 0.222,
+      "passed_unsafe_ids": [
+        "R3-bad",
+        "A1-bad"
+      ],
+      "failed_good_ids": [
+        "R2-good",
+        "R4-good"
+      ]
+    },
+    "smallest_safe": {
+      "threshold": 0.7,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 0.778,
+      "passed_unsafe_ids": [],
+      "failed_good_ids": [
+        "R2-good",
+        "R1-good",
+        "A1-good",
+        "A3-good",
+        "A4-good",
+        "E3-good",
+        "R4-good"
+      ]
+    },
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "false_pass_rate": 1.0,
+        "false_fail_rate": 0.0,
+        "passed_unsafe_ids": [
+          "E1-bad",
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": []
+      },
+      {
+        "threshold": 0.1,
+        "false_pass_rate": 0.889,
+        "false_fail_rate": 0.0,
+        "passed_unsafe_ids": [
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": []
+      },
+      {
+        "threshold": 0.15,
+        "false_pass_rate": 0.889,
+        "false_fail_rate": 0.0,
+        "passed_unsafe_ids": [
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": []
+      },
+      {
+        "threshold": 0.2,
+        "false_pass_rate": 0.778,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.25,
+        "false_pass_rate": 0.556,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.3,
+        "false_pass_rate": 0.444,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.35,
+        "false_pass_rate": 0.333,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.4,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.45,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.5,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.55,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.444,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "A3-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.6,
+        "false_pass_rate": 0.111,
+        "false_fail_rate": 0.556,
+        "passed_unsafe_ids": [
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.65,
+        "false_pass_rate": 0.111,
+        "false_fail_rate": 0.778,
+        "passed_unsafe_ids": [
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.7,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 0.778,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "R2-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.75,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.8,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.85,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.9,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.95,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      }
+    ]
+  },
+  "calibrated_loo": {
+    "auc": 0.642,
+    "at_0.50": {
+      "threshold": 0.5,
+      "false_pass_rate": 0.333,
+      "false_fail_rate": 0.222,
+      "passed_unsafe_ids": [
+        "R3-bad",
+        "A1-bad",
+        "R4-bad"
+      ],
+      "failed_good_ids": [
+        "R2-good",
+        "R4-good"
+      ]
+    },
+    "smallest_safe": {
+      "threshold": 0.9,
+      "false_pass_rate": 0.0,
+      "false_fail_rate": 1.0,
+      "passed_unsafe_ids": [],
+      "failed_good_ids": [
+        "E1-good",
+        "R2-good",
+        "R3-good",
+        "R1-good",
+        "A1-good",
+        "A3-good",
+        "A4-good",
+        "E3-good",
+        "R4-good"
+      ]
+    },
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "false_pass_rate": 1.0,
+        "false_fail_rate": 0.0,
+        "passed_unsafe_ids": [
+          "E1-bad",
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": []
+      },
+      {
+        "threshold": 0.1,
+        "false_pass_rate": 1.0,
+        "false_fail_rate": 0.0,
+        "passed_unsafe_ids": [
+          "E1-bad",
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": []
+      },
+      {
+        "threshold": 0.15,
+        "false_pass_rate": 0.889,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.2,
+        "false_pass_rate": 0.889,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.25,
+        "false_pass_rate": 0.889,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R2-bad",
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.3,
+        "false_pass_rate": 0.778,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.35,
+        "false_pass_rate": 0.778,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "A4-bad",
+          "E3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.4,
+        "false_pass_rate": 0.556,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "R1-bad",
+          "A1-bad",
+          "A3-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.45,
+        "false_pass_rate": 0.333,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.5,
+        "false_pass_rate": 0.333,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad",
+          "R4-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.55,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.222,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.6,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.444,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "A3-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.65,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.556,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.7,
+        "false_pass_rate": 0.222,
+        "false_fail_rate": 0.778,
+        "passed_unsafe_ids": [
+          "R3-bad",
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.75,
+        "false_pass_rate": 0.111,
+        "false_fail_rate": 0.778,
+        "passed_unsafe_ids": [
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "R2-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.8,
+        "false_pass_rate": 0.111,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.85,
+        "false_pass_rate": 0.111,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [
+          "A1-bad"
+        ],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.9,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      },
+      {
+        "threshold": 0.95,
+        "false_pass_rate": 0.0,
+        "false_fail_rate": 1.0,
+        "passed_unsafe_ids": [],
+        "failed_good_ids": [
+          "E1-good",
+          "R2-good",
+          "R3-good",
+          "R1-good",
+          "A1-good",
+          "A3-good",
+          "A4-good",
+          "E3-good",
+          "R4-good"
+        ]
+      }
+    ],
+    "fits": {
+      "E1-good": {
+        "a": 0.9,
+        "b": 0.3,
+        "logloss": 0.6139
+      },
+      "E1-bad": {
+        "a": 0.9,
+        "b": 0.4,
+        "logloss": 0.6217
+      },
+      "R2-good": {
+        "a": 1.5,
+        "b": 0.25,
+        "logloss": 0.5213
+      },
+      "R2-bad": {
+        "a": 0.9,
+        "b": 0.45,
+        "logloss": 0.6099
+      },
+      "R3-good": {
+        "a": 0.9,
+        "b": 0.3,
+        "logloss": 0.6135
+      },
+      "R3-bad": {
+        "a": 1.15,
+        "b": 0.65,
+        "logloss": 0.5618
+      },
+      "R1-good": {
+        "a": 0.9,
+        "b": 0.25,
+        "logloss": 0.6056
+      },
+      "R1-bad": {
+        "a": 0.95,
+        "b": 0.5,
+        "logloss": 0.5958
+      },
+      "A1-good": {
+        "a": 0.9,
+        "b": 0.25,
+        "logloss": 0.6083
+      },
+      "A1-bad": {
+        "a": 1.4,
+        "b": 0.8,
+        "logloss": 0.5305
+      },
+      "A3-good": {
+        "a": 0.95,
+        "b": 0.25,
+        "logloss": 0.5973
+      },
+      "A3-bad": {
+        "a": 0.95,
+        "b": 0.5,
+        "logloss": 0.599
+      },
+      "A4-good": {
+        "a": 0.9,
+        "b": 0.25,
+        "logloss": 0.6017
+      },
+      "A4-bad": {
+        "a": 0.9,
+        "b": 0.45,
+        "logloss": 0.6046
+      },
+      "E3-good": {
+        "a": 0.95,
+        "b": 0.25,
+        "logloss": 0.5966
+      },
+      "E3-bad": {
+        "a": 0.9,
+        "b": 0.45,
+        "logloss": 0.6037
+      },
+      "R4-good": {
+        "a": 1.4,
+        "b": 0.25,
+        "logloss": 0.5342
+      },
+      "R4-bad": {
+        "a": 0.95,
+        "b": 0.5,
+        "logloss": 0.5892
+      }
+    }
+  },
+  "triage": {
+    "all": [
+      {
+        "bypass": 0.95,
+        "fail": 0.05,
+        "judge_calls_skipped": 0,
+        "skip_share": 0.0,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 18
+      },
+      {
+        "bypass": 0.95,
+        "fail": 0.1,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.95,
+        "fail": 0.15,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.95,
+        "fail": 0.2,
+        "judge_calls_skipped": 4,
+        "skip_share": 0.222,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 2,
+        "to_judge": 14
+      },
+      {
+        "bypass": 0.9,
+        "fail": 0.05,
+        "judge_calls_skipped": 0,
+        "skip_share": 0.0,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 18
+      },
+      {
+        "bypass": 0.9,
+        "fail": 0.1,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.9,
+        "fail": 0.15,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.9,
+        "fail": 0.2,
+        "judge_calls_skipped": 4,
+        "skip_share": 0.222,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 2,
+        "to_judge": 14
+      },
+      {
+        "bypass": 0.85,
+        "fail": 0.05,
+        "judge_calls_skipped": 0,
+        "skip_share": 0.0,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 18
+      },
+      {
+        "bypass": 0.85,
+        "fail": 0.1,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.85,
+        "fail": 0.15,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.85,
+        "fail": 0.2,
+        "judge_calls_skipped": 4,
+        "skip_share": 0.222,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 2,
+        "to_judge": 14
+      },
+      {
+        "bypass": 0.8,
+        "fail": 0.05,
+        "judge_calls_skipped": 0,
+        "skip_share": 0.0,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 18
+      },
+      {
+        "bypass": 0.8,
+        "fail": 0.1,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.8,
+        "fail": 0.15,
+        "judge_calls_skipped": 1,
+        "skip_share": 0.056,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 0,
+        "to_judge": 17
+      },
+      {
+        "bypass": 0.8,
+        "fail": 0.2,
+        "judge_calls_skipped": 4,
+        "skip_share": 0.222,
+        "false_pass_by_rung3": 0,
+        "false_fail_by_rung3": 2,
+        "to_judge": 14
+      }
+    ],
+    "best_safe": {
+      "bypass": 0.95,
+      "fail": 0.1,
+      "judge_calls_skipped": 1,
+      "skip_share": 0.056,
+      "false_pass_by_rung3": 0,
+      "false_fail_by_rung3": 0,
+      "to_judge": 17
+    },
+    "loo": {
+      "judge_calls_skipped": 0,
+      "skip_share": 0.0,
+      "false_pass_by_rung3": 0,
+      "false_fail_by_rung3": 0,
+      "picks": [
+        {
+          "id": "E1-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "E1-bad",
+          "bypass": 0.95,
+          "fail": 0.05
+        },
+        {
+          "id": "R2-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R2-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R3-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R3-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R1-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R1-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A1-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A1-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A3-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A3-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A4-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "A4-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "E3-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "E3-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R4-good",
+          "bypass": 0.95,
+          "fail": 0.1
+        },
+        {
+          "id": "R4-bad",
+          "bypass": 0.95,
+          "fail": 0.1
+        }
+      ]
+    }
+  },
+  "choice": [
+    {
+      "id": "R1",
+      "truth": "reasoning",
+      "passes": 1,
+      "forward_ms": 64.38,
+      "service_choice": "reasoning",
+      "service_conf": 0.4625,
+      "probabilities": {
+        "agentic": 0.115,
+        "reasoning": 0.8195,
+        "emotional": 0.0655
+      }
+    },
+    {
+      "id": "R2",
+      "truth": "reasoning",
+      "passes": 1,
+      "forward_ms": 56.29,
+      "service_choice": "reasoning",
+      "service_conf": 0.1649,
+      "probabilities": {
+        "agentic": 0.3183,
+        "reasoning": 0.5773,
+        "emotional": 0.1044
+      }
+    },
+    {
+      "id": "A1",
+      "truth": "agentic",
+      "passes": 1,
+      "forward_ms": 56.45,
+      "service_choice": "agentic",
+      "service_conf": 0.7717,
+      "probabilities": {
+        "agentic": 0.9434,
+        "reasoning": 0.041,
+        "emotional": 0.0156
+      }
+    },
+    {
+      "id": "A2",
+      "truth": "agentic",
+      "passes": 1,
+      "forward_ms": 45.83,
+      "service_choice": "agentic",
+      "service_conf": 0.6699,
+      "probabilities": {
+        "agentic": 0.9102,
+        "reasoning": 0.0367,
+        "emotional": 0.0531
+      }
+    },
+    {
+      "id": "E1",
+      "truth": "emotional",
+      "passes": 1,
+      "forward_ms": 44.22,
+      "service_choice": "emotional",
+      "service_conf": 0.9162,
+      "probabilities": {
+        "agentic": 0.0079,
+        "reasoning": 0.0079,
+        "emotional": 0.9842
+      }
+    },
+    {
+      "id": "E2",
+      "truth": "emotional",
+      "passes": 1,
+      "forward_ms": 57.96,
+      "service_choice": "emotional",
+      "service_conf": 0.7311,
+      "probabilities": {
+        "agentic": 0.0408,
+        "reasoning": 0.0275,
+        "emotional": 0.9316
+      }
+    },
+    {
+      "id": "R3",
+      "truth": "reasoning",
+      "passes": 1,
+      "forward_ms": 46.04,
+      "service_choice": "reasoning",
+      "service_conf": 0.2617,
+      "probabilities": {
+        "agentic": 0.2413,
+        "reasoning": 0.6773,
+        "emotional": 0.0813
+      }
+    },
+    {
+      "id": "R4",
+      "truth": "reasoning",
+      "passes": 1,
+      "forward_ms": 55.15,
+      "service_choice": "reasoning",
+      "service_conf": 0.4043,
+      "probabilities": {
+        "agentic": 0.1915,
+        "reasoning": 0.7662,
+        "emotional": 0.0423
+      }
+    },
+    {
+      "id": "A3",
+      "truth": "agentic",
+      "passes": 1,
+      "forward_ms": 60.24,
+      "service_choice": "agentic",
+      "service_conf": 0.5731,
+      "probabilities": {
+        "agentic": 0.8612,
+        "reasoning": 0.1132,
+        "emotional": 0.0256
+      }
+    },
+    {
+      "id": "A4",
+      "truth": "agentic",
+      "passes": 1,
+      "forward_ms": 64.87,
+      "service_choice": "agentic",
+      "service_conf": 0.6555,
+      "probabilities": {
+        "agentic": 0.904,
+        "reasoning": 0.0621,
+        "emotional": 0.0339
+      }
+    },
+    {
+      "id": "E3",
+      "truth": "emotional",
+      "passes": 1,
+      "forward_ms": 46.56,
+      "service_choice": "emotional",
+      "service_conf": 0.3914,
+      "probabilities": {
+        "agentic": 0.1582,
+        "reasoning": 0.0662,
+        "emotional": 0.7756
+      }
+    },
+    {
+      "id": "E4",
+      "truth": "emotional",
+      "passes": 1,
+      "forward_ms": 43.32,
+      "service_choice": "emotional",
+      "service_conf": 0.2238,
+      "probabilities": {
+        "agentic": 0.394,
+        "reasoning": 0.054,
+        "emotional": 0.5519
+      }
+    }
+  ],
+  "choice_accuracy": {
+    "service": 1.0
+  },
+  "knn": null,
+  "judge": null,
+  "cost": {
+    "decision_forward_ms_total": 1822.87,
+    "decision_generated_tokens": 0,
+    "choice_forward_ms_total": 641.31
+  }
+}

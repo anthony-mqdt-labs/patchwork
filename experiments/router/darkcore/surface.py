@@ -15,7 +15,8 @@ JOURNAL_PATH = os.path.join(HERE, "config.journal.jsonl")
 
 SURFACE_VERSION = 1
 LAMBDA_MAX = 2.0
-VERIFIER_REGISTRY = {"nested_tool_check", "plugback_or_judge", "next_tier_judge"}
+VERIFIER_REGISTRY = {"nested_tool_check", "plugback_or_judge", "next_tier_judge",
+                     "decision_judge"}  # rung 3; darkcore/decisions.py
 SIGNAL_REGISTRY = {
     "tool_roster_present", "code_fence_present",
     "affective_first_person", "reasoning_shape",

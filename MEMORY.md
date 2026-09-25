@@ -3,7 +3,7 @@
 > **Purpose:** Durable facts about the project — decisions, known issues, resolved questions, and current state. Not a session handoff (that's `CONTINUE.md`).
 > **Rule:** AUTO-marked sections are refreshable by script. Manual sections are hand-edited and never touched by tooling.
 
-Last updated: 2026-07-19
+Last updated: 2026-09-25
 
 ---
 
@@ -22,6 +22,7 @@ Last updated: 2026-07-19
 | D007 | Governance is firm-based/hierarchical (quorum is a separate project) | Adopted | 2026-07-16 | Orchestrator supervises subordinate workers |
 | D008 | Router models = Bonsai ternary 1.7B/8B/27B on stock mlx_lm (M2 dev); supersedes the Qwen2.5/IQ4_XS candidacy for the routing thread | Adopted | 2026-07-16 | Established by the spark eval work (MODEL-EVAL, bake-offs) |
 | D009 | Require a project-entry GitHub authentication preflight for `anthony-mqdt-labs`; keep commit identity repository-local | Adopted | 2026-07-20 | Prevents the shared GitHub CLI session and Git author identity from leaking across sibling projects |
+| D010 | Rung 3 of the verifier ladder = a decision tier (`experiments/router/darkcore/decisions.py`): a micro-scorer over a resident tier, plus a `POST /v1/systemone` client for shipped System One models. Ships as **three-way triage, default off** — never as the pass authority | Adopted | 2026-09-25 | Measured: a raw next-token head is a good ranker (AUC 0.914) and a poor decider (22.2% false-pass; no threshold separates plausible-but-wrong), while LOO triage skips 8/18 judge calls at 0/0 error. Ties into D006's certificate-cost taxonomy; default gated on a larger labelled set (`experiments/router/DECISION-REPORT.md`) |
 
 <!-- /AUTO:decisions -->
 
@@ -30,7 +31,6 @@ Last updated: 2026-07-19
 ## Known Issues
 
 <!-- AUTO:issues — refreshable by scripts/agent-tools/update-memory.py --issue -->
-
 - **V-struct (S1 gap) — FIXED in bench v0.1:** rung-0 gained an argument-shape
   table; A1 now escalates T0✗→T1✓ and **all five spec thresholds pass**
   (quality 0.900, speedup 1.72×). Residual: rung-0 stays blind to *strategy*
@@ -52,7 +52,23 @@ Last updated: 2026-07-19
   embedder's pages regardless of runtime; worst overhead 22.31 ms vs torch's
   22.36). Mitigated by rewarm-at-the-evicting-route's-tail; S4 passes with
   margin. Journal Episode 9.
-
+- Rung-3 decision verifier is UNSAFE as a pass authority (22.2% false-pass at threshold 0.5; no single threshold separates the plausible-but-wrong pairs, and Platt calibration cannot repair a ranking failure) — **OPEN**
+  Measured on 18 labelled pairs (`experiments/router/fixtures/decision-pairs.json` →
+  `DECISION-BENCH.json`): AUC 0.914, and the smallest zero-false-pass
+  threshold (0.75) rejects 66.7% of the good answers. The shipped mode is the
+  safe one — `decision_judge` three-way triage
+  (`bypass_threshold`/`fail_threshold`, LOO 8/18 judge calls skipped at 0/0
+  error), **default off**, because 0 errors in 18 trials bounds the true rate
+  only by the rule of three (≈17%). **Step 0 outcome (2026-09-25): NEGATIVE** —
+  a real shipped calibrated model (Laya 421 M, torch-free via ggmlc/Metal) was
+  benched on the same pairs through this client: AUC 0.728, 22% false-pass AND
+  22% false-fail, LOO triage 0/18 — worse than our raw head. Three independent
+  off-the-shelf approaches have now failed this job (also the zero-shot NLI
+  cross-encoder, 0.884 vs 0.506). Next action: stop hunting off-the-shelf
+  verifiers; either train the head on the judge's own verdicts
+  (`research/decision-finetune-path.md`) or keep the rung-4 judge. Adopt the
+  family where it *works*: choice/routing, 12/12 at 53 ms.
+  `experiments/router/DECISION-REPORT.md` §5, `experiments/router/LAYA-BENCH.json`.
 <!-- /AUTO:issues -->
 
 ---
@@ -72,6 +88,7 @@ Last updated: 2026-07-19
 - 2026-07-18 — mlx embedder port shipped (embedder_mlx.py, fp32, zero new deps): parity EXACT vs frozen torch reference, snapshot v2 (runtime: mlx-fp32) as config v4, torch+transformers dropped from pyproject, bench all-5-PASS. Finding: 27B still evicts the mlx embedder (22.31ms worst) — rewarm pattern stays. Journal Episode 9.
 - 2026-07-19 — Cross-repo: spark spec 0001 model-fleet-api opened (wip-research, 6 spikes; embedder promoted to first fleet tenant S6); patchwork side tracked in generalized-router-interfaces plan (Tier/Enricher = first customer). GitHub remote renamed to anthony-mqdt-labs; commit email switched to noreply.
 - 2026-07-20 — Added mandatory project-entry GitHub account preflight: verify `gh api user` is `anthony-mqdt-labs` before work; stop and direct the user to switch/login when it is not. Git identity remains repository-local.
+- 2026-09-25 — Rung-3 decision tier built + live-fired: darkcore/decisions.py (micro-scorer over a resident tier, /v1/systemone http client, decision_judge verifier registered at rung 3; 24 model-free tests incl. a loopback http round-trip, suite 85p/3s). Measured on 18 labelled pairs (fixtures/decision-pairs.json): AUC 0.914, 22.2% false-pass as a pass authority, LOO triage 8/18 judge calls skipped at 0/0 error. Surveys: research/system-one-decision-models.md, research/decision-finetune-path.md. Report: experiments/router/DECISION-REPORT.md
 <!-- /AUTO:changes -->
 
 ---
