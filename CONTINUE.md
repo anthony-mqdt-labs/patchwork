@@ -172,4 +172,12 @@ blind to *strategy* (A4, by design).
   no class uses `decision_judge` yet.
 - Bench answer snapshots live in `experiments/router/bench-answers/`;
   `DECISION-BENCH.json` follows the same rule (numbers only).
-- Eval substrate lives in **spark**: `spark/MODEL-EVAL-2026-07-15.md`.
+- **Decision-tier model weights live in the HF cache at pinned revisions**, and the
+  `ggmlc` tool (which runs Laya torch-free) is at `~/.local/share/laya/laya`. Revisions,
+  SHA-256s and the tool's trust caveats are recorded in
+  `research/system-one-decision-models.md` §Provenance — verify, do not assume.
+- **The 27B generation drift:** `experiments/router/darkcore/config.json` asks for
+  prism-ml/Ternary-Bonsai-27B-mlx-2bit while spark's registry points at
+  prism-ml/Ternary-Bonsai-2-27B-mlx-2bit (a newer build). Neither is downloaded; pick
+  deliberately rather than letting one arrive by accident.
+- Eval substrate lives in **spark**: `../spark/MODEL-EVAL-2026-07-15.md`.

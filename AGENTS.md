@@ -161,16 +161,20 @@ patchwork/
 - Do NOT delete another agent's research — add yours as a new section or file
 
 **Commit gate (doc references).** `scripts/hooks/pre-commit` (wired via
-`core.hooksPath`, so it is not in `.git/hooks/`) validates every backticked span
-in `AGENTS.md`, `MEMORY.md`, `CONTINUE.md` and `plans/index.md` that looks like a
-path: it must resolve from the repo root. Two consequences worth knowing before
-you write prose there — a bare endpoint path is read as an absolute filesystem
-path (and fails), and a short repo-relative path such as a module under
-`experiments/` resolves from the *root*, not from the directory the doc sits in.
-Spans containing a space or angle brackets are ignored by the checker, which is
-why `POST /v1/systemone` and `~/.hermes/profiles/<profile>/...` are fine. Run
-`scripts/agent-tools/update-agents.py --report` before committing to see the
-drift; the hook blocks the commit until it is clean.
+`core.hooksPath`, so it is not in `.git/hooks/`) extracts the backticked spans in
+`AGENTS.md`, `MEMORY.md`, `CONTINUE.md` and `plans/index.md`, and every span that
+looks like a path must resolve **from the repo root** — not from the directory
+the doc sits in, and a bare endpoint path is read as an absolute filesystem path
+and fails. Spans containing a space or angle brackets are ignored, which is why
+`POST /v1/systemone` and `~/.hermes/profiles/<profile>/...` are fine.
+
+**But a green report is not proof.** The extractor pairs backticks blindly, so
+every fenced code block shifts the pairing and produces paragraph-grabbing spans
+that are then skipped for containing spaces. Measured coverage of the four docs:
+`MEMORY.md` ~100 % (no fences), `CONTINUE.md` ~57 %, `plans/index.md` ~21 %,
+`AGENTS.md` ~20 %. So the gate catches what it happens to see, not everything —
+fix references properly rather than relying on it, and run
+`scripts/agent-tools/update-agents.py --report` before committing.
 
 ### When experimenting:
 - Place prototypes in `experiments/` with a clear README

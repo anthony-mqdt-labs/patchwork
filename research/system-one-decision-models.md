@@ -143,13 +143,19 @@ this box, and it needed no torch.
    Live-fired; see `DECISION-REPORT.md`.
 2. **Laya, torch-free, via `ggmlc` + `mys/laya-GGUF`** — `pip install laya` is
    **off the table** (torch is a core dependency and the `onnx` extra does not
-   remove it), but a prebuilt Metal binary plus one 431 MB Q8_0 GGUF runs the
-   real model with **zero Python dependencies**:
+   remove it), but a prebuilt Metal binary plus one ~450 MB Q8_0 GGUF runs the
+   real model with **zero Python dependencies**. Both are now durable: the tool at
+   `~/.local/share/laya/laya`, the weights in the HF cache at pinned revisions
+   (see §Provenance below for hashes and revisions):
    ```bash
+   # tool (GitHub release, NOT on Hugging Face): v0.9.5 macos-arm64-metal
+   mkdir -p ~/.local/share/laya && cd ~/.local/share/laya
    curl -sL https://github.com/monatis/ggmlc/releases/download/v0.9.5/laya-macos-arm64-metal.tar.gz | tar xz
-   curl -sL -o models/laya_english_q8_0.gguf \
-     https://huggingface.co/mys/laya-GGUF/resolve/main/laya_english_q8_0.gguf
-   ./laya serve models/laya_english_q8_0.gguf --port 8123 --device metal
+   # weights (Hugging Face, revision-pinned so the download is reproducible)
+   hf download mys/laya-GGUF --revision 713ae6f6e39fb54835e010485656e4484e5ec411 \
+     --include "laya_english_q8_0.gguf"
+   L="$HOME/.cache/huggingface/hub/models--mys--laya-GGUF/snapshots/713ae6f6e39fb54835e010485656e4484e5ec411/laya_english_q8_0.gguf"
+   ~/.local/share/laya/laya serve "$L" --port 8123 --device metal
    ```
    `laya serve` exposes **`POST /v1/systemone`** — the same contract
    `darkcore/decisions.py` already speaks, so `decision_bench.py --backend http`
@@ -159,6 +165,15 @@ this box, and it needed no torch.
    larger question set raises an **uncaught C++ exception (SIGABRT)** rather than
    a catchable error — keep label sets small or compile your own GGUF (which
    needs torch).
+
+   **Trust notes for the tool (verified 2026-09-25, not assumed):** it is
+   unsigned (adhoc/linker-signed, no TeamIdentifier) and `spctl` rejects it; there
+   is no build attestation (`gh attestation verify` → 404) and **no licence file
+   in the repo** despite an MIT badge in the README; it binds **all interfaces**
+   (`TCP *:PORT (LISTEN)`), not just localhost; its only baked-in network
+   endpoints are `127.0.0.1`/`localhost` plus documentation links, and no outbound
+   TCP was observed while serving. Treat it as untrusted tooling: short-lived
+   sessions, nothing sensitive in the state you send.
 3. **Jev-Style 0.8 B v3** (MLX and GGUF builds, Apache-2.0) — the family the
    deeper survey ranks first for a no-torch 16 GB box: a genuine one-pass typed-
    probability model with published accuracy, 25 600-token inputs, 51 languages.
@@ -218,6 +233,45 @@ this box, and it needed no torch.
   pip-installable tool-caller with a documented LoRA path is directly relevant to
   the *agentic* tier's function-selection problem, which is a different question
   from verification.
+
+## Provenance (verified 2026-09-25)
+
+Every weight this survey recommends and the decision work measured is now durable in the
+Hugging Face cache at a **pinned revision**, and the one piece that is not an HF artifact
+(the `ggmlc` runtime) is pinned by SHA-256. Verification method: Hugging Face stores each
+file's SHA-256 as its LFS object id
+(`/api/models/<id>/tree/<rev>?expand=true&recursive=true`), so a local hash matching the
+repo's object id proves the bytes came from that repo — rather than assuming it from a URL.
+Byte-identity was confirmed against the original scratch copies before those were deleted.
+
+| artifact | source | revision / tag | size |
+|---|---|---|---|
+| `laya_english_q8_0.gguf` | HF `mys/laya-GGUF` | `713ae6f6e39fb54835e010485656e4484e5ec411` | 451.5 MB |
+| `laya_multilingual_q8_0.gguf` | HF `mys/laya-multilingual-GGUF` | `3b645ae5428115fa5fd1c453070d22c3ce4b987d` | 361.7 MB |
+| `onnx/model_quantized.onnx` (int8) | HF `MoritzLaurer/ModernBERT-large-zeroshot-v2.0` | `a51e07b524299e309dd2b88d48b0cfa2bd9ec598` | 398.1 MB |
+| `onnx/model_quantized.onnx` + `_data` (int8) | HF `onnx-community/bge-small-en-v1.5-ONNX` | `4a9a46c7b88fa408e650a571a1800243f26309bd` | 33 MB |
+| `laya` + its release tarball | GitHub `monatis/ggmlc` — **not** Hugging Face | tag `v0.9.5` | 3.2 MB + 1.1 MB |
+
+```
+6243305fb16cf22e53b932c220bd029be2adbfbec6ce120356517b8ae2f38382  laya_english_q8_0.gguf
+757c1a4b1f0f41824113dde76d6cd06b0881d37b796103a338de77f9f9b935c3  laya_multilingual_q8_0.gguf
+4fcd879d3433e2fff506ac86221b4656f6a960653752ee87d087efd3a64cc128  model_quantized.onnx        (ModernBERT zs int8)
+4d46eaef91aaa13133a32aafba250a05265c220d1e526797fb55359bfb5a953a  model_quantized.onnx        (bge-small int8 graph)
+bf3c4475ba4cac85907418ef34a48dbdfcf628ee91c85415ca6b0c3e70a94cbb  model_quantized.onnx_data   (bge-small int8 weights)
+cb20401a39eff32169d6eaf310bfb60cde33cdd68613a802ebf2f1f6a23fde57  laya                        (ggmlc binary)
+a1ccbcbcf8d35997c0882cbbe2dae84cf82132b3208918ade3f8da7a4bfd19c5  laya-v0.9.5-macos-arm64-metal.tar.gz
+```
+
+Local paths: the four weight sets resolve under
+`$HOME/.cache/huggingface/hub/models--<org>--<name>/snapshots/<revision>/`, and the tool
+lives at `~/.local/share/laya/laya`. Re-downloads are reproducible with the pinned
+revisions, e.g.
+`hf download mys/laya-GGUF --revision 713ae6f6e39fb54835e010485656e4484e5ec411 --include "laya_english_q8_0.gguf"`.
+
+Two notes for anyone verifying later: only the **int8 subsets** were fetched from the ONNX
+repos, not the whole repository, so a full-tree hash check will not match; and the tool's
+trust posture (unsigned, no attestation, no licence file) is recorded in §4 above — it is
+pinned for integrity, not vouched for.
 
 ## 7. Sources
 

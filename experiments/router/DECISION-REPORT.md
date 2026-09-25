@@ -142,8 +142,14 @@ served torch-free via the `ggmlc` Metal binary and `mys/laya-GGUF`
 (`laya_english_q8_0.gguf`), driven through `darkcore/decisions.py`'s own
 `/v1/systemone` client:
 
+The weights now live in the HF cache at a pinned revision (see
+`research/system-one-decision-models.md` §Provenance), and the ggmlc binary is
+durable at `~/.local/share/laya/laya` — it is self-contained (system frameworks
+and an embedded Metal library only), so moving it was a plain file move.
+
 ```bash
-./laya serve models/laya_english_q8_0.gguf --port 8123 --device metal
+L="$HOME/.cache/huggingface/hub/models--mys--laya-GGUF/snapshots/713ae6f6e39fb54835e010485656e4484e5ec411/laya_english_q8_0.gguf"
+~/.local/share/laya/laya serve "$L" --port 8123 --device metal
 .venv/bin/python decision_bench.py --backend http --url http://127.0.0.1:8123
 ```
 
